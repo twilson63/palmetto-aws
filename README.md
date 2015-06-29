@@ -1,8 +1,15 @@
 # Palmetto-aws
 
 This is a PalmettoFlow adapter using AWS SNS and SQS as its pub/sub system. Using
-SNS and SQS enables AWS Lambda to be leveraged as your backoffice services. Which
+SNS and SQS enables AWS Lambda to be leveraged as your back office services. Which
 will make them very easy to manage and deploy.
+
+## AWS Lambda
+
+This is perfect for AWS Lambda backoffice services, because you can trigger Lambda
+functions from SNS, and you lambda message can write to SQS. Using Amazon DynamoDb
+is the best storage option, but you can use publicly accessible data sources, like
+https://cloudant.com/, https://www.firebase.com/, or https://redislabs.com
 
 ## Getting Started
 
@@ -42,6 +49,48 @@ ee.emit('send', {
   subject: 'myservice',
   verb: 'create',
   object: { foo: 'bar' }
+})
+```
+
+## Create Topic and Queue
+
+``` js
+var AWS = require('aws-sdk')
+
+var sns = new AWS.SNS({ region: 'us-east-1'})
+var sqs = new AWS.SQS({ region: 'us-east-1'})
+
+sns.createTopic({ Name: '[topic]' }, function (err, res) {
+  if (err) return console.log(err)
+  console.log(res)
+})
+
+sqs.createQueue({ QueueName: '[queue]'}, function (err, res) {
+  if (err) return console.log(err)
+  console.log(res)
+})
+```
+
+## Delete Topic and Queue
+
+Removing Topic and Queue
+
+``` js
+var AWS = require('aws-sdk')
+
+var sns = new AWS.SNS({ region: 'us-east-1'})
+var sqs = new AWS.SQS({ region: 'us-east-1'})
+
+
+sqs.deleteQueue({ QueueUrl: 'https://sqs.us-east-1.amazonaws.com/[acct]/[queue]'}, function (err, res) {
+  console.log(err)
+  console.log(res)
+})
+
+
+sns.deleteTopic({ TopicArn: 'arn:aws:sns:us-east-1:[acct]:[topic]'}, function (err, res) {
+  console.log(res)
+
 })
 ```
 

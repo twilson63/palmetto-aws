@@ -1,18 +1,23 @@
 {
-  "name": "palmetto-aws",
+  "name": "@twilson63/palmetto-aws",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "directories": {
-    "test": "test"
+    "test": "tap test"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "Tom",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "aws-sdk": "^2.1.36"
+  },
+  "devDependencies": {
+    "rewire": "^2.3.4",
+    "tap": "^1.3.1",
+    "uuid": "^2.0.1"
   }
 }
